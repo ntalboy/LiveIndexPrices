@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Index Price Tracker</title>
+    <style>
+        .container{
+            display: flex;
+            height: 100vh;
+        }
+        .btc{
+            width: 32%;
+            border-style: solid;
+            border-radius: 25px;
+            margin: 8px;
+            background-color: #f6c855;
+        }
+        .eth{
+            width: 32%;
+            border-style: solid;
+            border-radius: 25px;
+            margin: 8px;
+            background-color: #d7e8ed;
+        }
+        .sol{
+            width: 32%;
+            border-style: solid;
+            border-radius: 25px;
+            margin: 8px;    
+            background-color: #e16cf6;
+        }
+    </style>
+</head>
+<body style = "background: #142d40">
+
+    <div class = "container">
+        <div class = "btc">
+            <div style = "display: flex; align-items: center; justify-content: center;">
+                <h1 style = "margin-right: 10px;">Bitcoin</h1>
+                <img src="static/bitcoin-logo-png-transparent.png" alt="Bitcoin Logo" style="float: left;" width="50" height="50">
+            </div>
+            <div style = "display: flex; justify-content: center;">
+                <h3 style = "font-family:Trebuchet MS;">Live Index Price (USD):</h3>
+                <h3 style = "font-family:trebuchet MS; border-width:3px; border-style:solid; border-color:#FF0000; border-radius: 7px; margin-left: 7px;"> {{index_prices['btc']}}</h3>
+            </div>
+        </div>
+
+        <div class = "eth">
+            <div style = "display: flex; align-items: center; justify-content: center;">
+                <h1 style = "margin-right: 10px;">Ethereum</h1>
+                <img src="static/ethereum-eth-logo.png" alt="Ethereum Logo" style="float: left;" width="50" height="50">
+            </div>
+            <div style = "display: flex; justify-content: center;">
+                <h3 style = "font-family:Trebuchet MS;">Live Index Price (USD):</h3>
+                <h3 style = "font-family:trebuchet MS; border-width:3px; border-style:solid; border-color:#FF0000; border-radius: 7px; margin-left: 7px;"> {{index_prices['eth']}}</h3>
+            </div>
+        </div>
+
+        <div class = "sol">
+            <div style = "display: flex; align-items: center; justify-content: center;">
+                <h1 style = "margin-right: 10px;">Solana</h1>
+                <img src="static/solana-sol-logo.png" alt="Solana Logo" style="float: left;" width="50" height="50">
+            </div>
+            <div style = "display: flex; justify-content: center;">
+                <h3 style = "font-family:Trebuchet MS;">Live Index Price (USD):</h3>
+                <h3 style = "font-family:trebuchet MS; border-width:3px; border-style:solid; border-color:#FF0000; border-radius: 7px; margin-left: 7px;"> {{index_prices['sol']}}</h3>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
