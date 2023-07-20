@@ -14,7 +14,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', index_prices = API_functions.get_index_prices(), compiled_prices = json.dumps(API_functions.get_prev_week_prices(), default=API_functions.datetime_serializer))
+    data = API_functions.get_prev_week_prices()
+    formatted_data = {
+        'timestamp': [ts.isoformat() for ts in data['timestamp']],
+        'btc': data['btc'],
+        'eth': data['eth'],
+        'sol': data['sol']
+    }
+    return render_template('index.html', index_prices = API_functions.get_index_prices(), compiled_prices =json.dumps(formatted_data))
 
 @app.route('/update_prices')
 def update_prices():
