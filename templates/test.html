@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Chart.js Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="priceChart"></canvas>
+    </div>
+
+    <script>
+
+        var jsonData = {
+            "timestamp": [
+                "2023-07-19T16:00:00.000Z",
+                "2023-07-18T16:00:00.000Z",
+                "2023-07-17T16:00:00.000Z",
+                "2023-07-16T16:00:00.000Z",
+                "2023-07-15T16:00:00.000Z",
+                "2023-07-14T16:00:00.000Z",
+                "2023-07-13T16:00:00.000Z"
+            ],
+            "btc": [
+                29996.8066,
+                29955.3635,
+                30295.7497,
+                30252.6605,
+                30336.4181,
+                31100.2451,
+                30379.8605
+            ]
+        };
+
+
+        var parsedData = JSON.parse(JSON.stringify(jsonData));
+
+
+        var timestamps = parsedData.timestamp.map(ts => new Date(ts));
+        var prices = parsedData.btc;
+
+
+        var ctx = document.getElementById('priceChart').getContext('2d');
+        var priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'BTC Price',
+                    data: prices,
+                    borderColor: 'rgb(75, 192, 192)',
+                    fill: false
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            tooltipFormat: 'MMM DD, YYYY',
+                            displayFormats: {
+                                day: 'MMM DD'
+                            }
+                        },
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Timestamp'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Price'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
