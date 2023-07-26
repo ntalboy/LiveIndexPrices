@@ -58,9 +58,6 @@ def get_index_prices():
 def timestamp_to_hkt_datetime(timestamp):
     return datetime.fromtimestamp(timestamp / 1000, tz=timezone(timedelta(hours=8)))
 
-def timestamp_to_hkt_date(timestamp):
-    return datetime.fromtimestamp(timestamp / 1000, tz=timezone(timedelta(hours=8))).date()
-
 def get_prev_week_prices():
     prev_week_btc = get_funding_chart_data('BTC_USDC-PERPETUAL', '1m')['result']['data']
     prev_week_eth = get_funding_chart_data('ETH_USDC-PERPETUAL', '1m')['result']['data']
