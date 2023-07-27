@@ -15,6 +15,16 @@ def get_funding_chart_data(instrument_name, length):
     r = requests.get(f'https://test.deribit.com/api/v2/public/get_funding_chart_data?instrument_name={instrument_name}&length={length}')
     return json.loads(r.text)
 
+def get_historical_volatility(currency):
+    '''
+    currency 
+        required = true
+        type = string
+        enum = BTC, ETH, USDC
+    '''
+    r = requests.get(f'https://test.deribit.com/api/v2/public/get_historical_volatility?currency={currency}')
+    return json.loads(r.text)
+
 # def get_instruments(currency, kind=None, expired=None):
 def get_instruments(currency, **kwargs):
 
@@ -58,7 +68,7 @@ def get_index_prices():
 def timestamp_to_hkt_datetime(timestamp):
     return datetime.fromtimestamp(timestamp / 1000, tz=timezone(timedelta(hours=8)))
 
-def get_prev_week_prices():
+def get_prev_week_prices_at_4():
     prev_week_btc = get_funding_chart_data('BTC_USDC-PERPETUAL', '1m')['result']['data']
     prev_week_eth = get_funding_chart_data('ETH_USDC-PERPETUAL', '1m')['result']['data']
     prev_week_sol = get_funding_chart_data('SOL_USDC-PERPETUAL', '1m')['result']['data']
@@ -72,13 +82,13 @@ def get_prev_week_prices():
     filtered_sol = [entry for entry in prev_week_sol if timestamp_to_hkt_datetime(entry['timestamp']).hour == 16]
     sorted_sol = sorted(filtered_sol, key=lambda x: x['timestamp'], reverse=True)
 
-    last_7_entries_at_4pm_hkt_btc = sorted_btc[:7]
-    last_7_entries_at_4pm_hkt_eth = sorted_eth[:7]
-    last_7_entries_at_4pm_hkt_sol = sorted_sol[:7]
+    last_7_entries_at_4pm_hkt_btc = sorted_btc[:10]
+    last_7_entries_at_4pm_hkt_eth = sorted_eth[:10]
+    last_7_entries_at_4pm_hkt_sol = sorted_sol[:10]
 
     compiled_entries = { 'timestamp':[], 'btc':[], 'eth':[], 'sol':[]}
     for (btc_entry, eth_entry, sol_entry) in zip(last_7_entries_at_4pm_hkt_btc, last_7_entries_at_4pm_hkt_eth, last_7_entries_at_4pm_hkt_sol):
-        compiled_entries['timestamp'].append(timestamp_to_hkt_datetime(btc_entry['timestamp']))
+        compiled_entries['timestamp'].append(timestamp_to_hkt_datetime(btc_entry['timestamp']).isoformat())
         compiled_entries['btc'].append(btc_entry['index_price'])
         compiled_entries['eth'].append(eth_entry['index_price'])
         compiled_entries['sol'].append(sol_entry['index_price'])
@@ -88,3 +98,28 @@ def get_prev_week_prices():
 def datetime_serializer(obj):
     if isinstance(obj, datetime):
         return obj.isoformat()
+    
+
+def get_prev_week_volatility():
+    prev_week_btc = get_historical_volatility('BTC')['result']
+    prev_week_eth = get_historical_volatility('ETH')['result']
+    
+    one_week_ago = datetime.now() - timedelta(weeks=1)
+    one_week_ago_timestamp = int(one_week_ago.timestamp() * 1000)
+
+    btc_filtered_data = []
+    timestamp_data = []
+
+    for timestamp, value in prev_week_btc:
+        if timestamp >= one_week_ago_timestamp:
+            btc_filtered_data.append(value)
+            timestamp_data.append(timestamp_to_hkt_datetime(timestamp).isoformat())
+   
+    eth_filtered_data = [value for timestamp, value in prev_week_eth if timestamp >= one_week_ago_timestamp]
+
+    compiled_data = {
+        'timestamp': timestamp_data,
+        'btc': btc_filtered_data,
+        'eth': eth_filtered_data
+    }
+    return compiled_data

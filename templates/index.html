@@ -6,70 +6,17 @@
     <title>Live Index Price Tracker</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data-10-year-range.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <style>
-        body {
-            background: #142d40;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .crypto-card {
-            width: 90%;
-            max-width: 400px;
-            border-style: solid;
-            border-radius: 25px;
-            margin: 8px;
-            background-color: #f6c855;
-            padding: 20px;
-        }
-
-        .crypto-card img {
-            float: left;
-            margin-right: 10px;
-        }
-
-        .crypto-card h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .crypto-card h3 {
-            font-family: Trebuchet MS;
-            margin: 7px 0;
-        }
-
-        .crypto-card h3:last-child {
-            margin-bottom: 20px;
-        }
-
-        .chart-container {
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        @media screen and (min-width: 768px) {
-            .crypto-card {
-                width: 32%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
 
     <div class = "container">
        
-        <div class="crypto-card btc">
-            <div style="display: flex; align-items: center;">
-                <img src="static/bitcoin-logo-png-transparent.png" alt="Bitcoin Logo" width="50" height="50">
+        <div class="crypto-card btc" style="background-color: #f6c855;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8%">
+                <img src="static/images/bitcoin-logo-png-transparent.png" alt="Bitcoin Logo" width="50" height="50">
                 <h1>Bitcoin</h1>
             </div>
             <div style="display: flex;">
@@ -81,42 +28,91 @@
             <div class="chart-container">
                 <canvas id="btc_priceChart" height="200"></canvas>
             </div>
+
+            <table id="btc_pricesTable" style="margin-top: 20px">
+                <thead>
+                    <tr>
+                        <th>Date and Time (HKT)</th>
+                        <th>Index Price (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <div class="chart-container" style="margin-top: 10%;">
+                <canvas id="btc_DVOLChart" height="200"></canvas>
+            </div>
         </div>
 
-        <div class="crypto-card eth">
-            <div style="display: flex; align-items: center;">
-                <img src="static/ethereum-eth-logo.png" alt="Ethereum Logo" width="50" height="50">
+        <div class="crypto-card eth" style=" background-color: #d7e8ed">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8%">
+                <img src="static/images/ethereum-eth-logo.png" alt="Ethereum Logo" width="50" height="50">
                 <h1>Ethereum</h1>
             </div>
             <div style="display: flex;">
                 <h3 style="font-family: Trebuchet MS; margin-right: 10px;">Live Index Price (USD):</h3>
-                <h3 id="eth_id" style="border-style: solid; border-radius: 0%; border-color: #FF0000;">
+                <h3 id="eth_id" style="border-style: solid; border-radius: 5px; border-color: #FF0000;">
                     {{index_prices['eth']}}
                 </h3>
             </div>
             <div class="chart-container">
                 <canvas id="eth_priceChart" height="200"></canvas>
             </div>
+
+            <table id="eth_pricesTable" style="margin-top: 20px">
+                <thead>
+                    <tr>
+                        <th>Date and Time (HKT)</th>
+                        <th>Index Price (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <div class="chart-container" style="margin-top: 10%;">
+                <canvas id="eth_DVOLChart" height="200"></canvas>
+            </div>
         </div>
 
-        <div class="crypto-card sol">
-            <div style="display: flex; align-items: center;">
-                <img src="static/solana-sol-logo.png" alt="Solana Logo" width="50" height="50">
+        <div class="crypto-card sol" style="background-color: #dd98ea; align-self: flex-start;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8%">
+                <img src="static/images/solana-sol-logo.png" alt="Solana Logo" width="50" height="50">
                 <h1>Solana</h1>
             </div>
             <div style="display: flex;">
                 <h3 style="font-family: Trebuchet MS; margin-right: 10px;">Live Index Price (USD):</h3>
-                <h3 id="sol_id" style="border-style: solid; border-radius: 0%; border-color: #FF0000;">
+                <h3 id="sol_id" style="border-style: solid; border-radius: 5px; border-color: #FF0000;">
                     {{index_prices['sol']}}
                 </h3>
             </div>
             <div class="chart-container">
                 <canvas id="sol_priceChart" height="200"></canvas>
             </div>
+
+            
+            <table id="sol_pricesTable" style="margin-top: 20px">
+                <thead>
+                    <tr>
+                        <th>Date and Time (HKT)</th>
+                        <th>Index Price (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2%;">
+        <img src="static\images\Logo_Q9_Capital.png" alt="Q9 Capital Logo" width="112" height="64">
     </div>
 
     <script>
+
         // JavaScript code for updating live index prices
         function updatePrices() {
             var xhttp = new XMLHttpRequest();
@@ -138,190 +134,49 @@
 
         setInterval(updatePrices, 2000);
 
-        // JavaScript code for displaying the Chart.js graphs
-        var jsonData = JSON.parse('{{ compiled_prices | safe }}');
-        console.log(jsonData);
-
-        var timestamps = jsonData.timestamp.map(ts => moment(ts, 'YYYY-MM-DD HH:mm:ss').toISOString());
-        var prices = jsonData.btc;
-
-        // Chart.js config for Bitcoin past 7 days index price at 4pm HKT chart
-        var ctx = document.getElementById('btc_priceChart').getContext('2d');
-        var btc_priceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: 'BTC Index Price (USD)',
-                    data: prices,
-                    borderColor: 'rgb(38, 165, 165)',
-                    fill: false
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Bitcoin Index Price at 4 pm HKT'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 30,
-                            minRotation: 30
-                        },
-                        time: {
-                            unit: 'day',
-                            tooltipFormat: 'MMM d, yyyy HH:mm',
-                            displayFormats: {
-                                day: 'MMM d, yyyy',
-                                hour: 'HH:mm'
-                            },
-                            offset: -480
-                        },
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Timestamp'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Price'
-                        }
-                    }
-                }
-            }
-        });
+        var compiled_prices = JSON.parse('{{ compiled_prices | safe }}');
+        console.log(compiled_prices);
         
-        // Chart.js config for Ethereum past 7 days index price at 4pm HKT chart
-        var ctx = document.getElementById('eth_priceChart').getContext('2d');
-        var eth_priceChart = new Chart(ctx, {   
-            type: 'line',
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: 'ETH Index Price (USD)',
-                    data: prices,
-                    borderColor: 'rgb(38, 165, 165)',
-                    fill: false
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Ethereum Index Price at 4 pm HKT'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 30,
-                            minRotation: 30
-                        },
-                        time: {
-                            unit: 'day',
-                            tooltipFormat: 'MMM d, yyyy HH:mm',
-                            displayFormats: {
-                                day: 'MMM d, yyyy',
-                                hour: 'HH:mm'
-                            },
-                            offset: -480
-                        },
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Timestamp'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Price'
-                        }
-                    }
-                }
-            }
-        });
+        
+        // Function to create a table row for each cryptocurrency
+        function createTableRow(timestamp, price) {
+            var row = document.createElement("tr");
+            var timestampCell = document.createElement("td");
 
-        // Chart.js config for Ethereum past 7 days index price at 4pm HKT chart
-        var ctx = document.getElementById('sol_priceChart').getContext('2d');
-        var sol_priceChart = new Chart(ctx, {   
-            type: 'line',
-            data: {
-                labels: timestamps,
-                datasets: [{
-                    label: 'SOL Index Price (USD)',
-                    data: prices,
-                    borderColor: 'rgb(38, 165, 165)',
-                    fill: false
-                }]
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Solana Index Price at 4 pm HKT'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 30,
-                            minRotation: 30
-                        },
-                        time: {
-                            unit: 'day',
-                            tooltipFormat: 'MMM d, yyyy HH:mm',
-                            displayFormats: {
-                                day: 'MMM d, yyyy',
-                                hour: 'HH:mm'
-                            },
-                            offset: -480
-                        },
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Timestamp'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Price'
-                        }
-                    }
-                }
+            var hktTimestamp = moment.tz(timestamp, 'Asia/Hong_Kong');
+            timestampCell.textContent = hktTimestamp.format('YYYY-MM-DD HH:mm:ss');
+            
+            var priceCell = document.createElement("td");
+            priceCell.textContent = price;
+
+            row.appendChild(timestampCell);
+            row.appendChild(priceCell);
+
+            return row;
+        }
+
+        // Function to generate the table for a specific cryptocurrency
+        function generateTable(containerId, timestamps, prices) {
+            var container = document.getElementById(containerId);
+            var tbody = container.querySelector('tbody');   
+
+            for (var i = 0; i < timestamps.length; i++) {
+                var row = createTableRow(timestamps[i], prices[i]);
+                tbody.appendChild(row);
             }
-        });
+        }
+
+        generateTable("btc_pricesTable", compiled_prices.timestamp, compiled_prices.btc);
+        generateTable("eth_pricesTable", compiled_prices.timestamp, compiled_prices.eth);
+        generateTable("sol_pricesTable", compiled_prices.timestamp, compiled_prices.sol);
+
+
+        var DVOL_data = JSON.parse('{{ DVOL_data | safe }}');
+        console.log(DVOL_data);
+        
     </script>
+
+    <script src="static\js\chartConfigs.js"></script>
 
 </body>
 </html>

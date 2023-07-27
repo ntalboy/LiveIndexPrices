@@ -1,0 +1,70 @@
+body {
+    background: #142d40;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.crypto-card {
+    width: 90%;
+    max-width: 400px;
+    border-style: solid;
+    border-radius: 25px;
+    margin: 8px;
+    padding: 20px;
+}
+
+.crypto-card img {
+    float: left;
+    margin-right: 10px;
+}
+
+.crypto-card h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.crypto-card h3 {
+    font-family: Trebuchet MS;
+    margin: 7px 0;
+}
+
+.crypto-card h3:last-child {
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+    .crypto-card {
+        width: 32%;
+    }
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+  }
