@@ -19,17 +19,20 @@
                 <img src="static/images/bitcoin-logo-png-transparent.png" alt="Bitcoin Logo" width="50" height="50">
                 <h1>Bitcoin</h1>
             </div>
-            <div style="display: flex;">
+            <div style="display: flex; align-items: center; justify-content: center;">
                 <h3 style="font-family: Trebuchet MS; margin-right: 10px;">Live Index Price (USD):</h3>
                 <h3 id="btc_id" style="border-style: solid; border-radius: 5px; border-color: #FF0000;">
                     {{index_prices['btc']}}
                 </h3>
+                <button onclick="copyText('btc_id')" class="copyToClipboardButton">
+                    <img src="static\images\copy_to_clipboard_icon.png" alt="Copy to Clipboard" width="16" height="16">
+                </button>
             </div>
             <div class="chart-container">
                 <canvas id="btc_priceChart" height="200"></canvas>
             </div>
 
-            <table id="btc_pricesTable" style="margin-top: 20px">
+            <table id="btc_pricesTable" style="margin: 0 auto;">
                 <thead>
                     <tr>
                         <th>Date and Time (HKT)</th>
@@ -51,17 +54,20 @@
                 <img src="static/images/ethereum-eth-logo.png" alt="Ethereum Logo" width="50" height="50">
                 <h1>Ethereum</h1>
             </div>
-            <div style="display: flex;">
+            <div style="display: flex; align-items: center; justify-content: center;">
                 <h3 style="font-family: Trebuchet MS; margin-right: 10px;">Live Index Price (USD):</h3>
                 <h3 id="eth_id" style="border-style: solid; border-radius: 5px; border-color: #FF0000;">
                     {{index_prices['eth']}}
                 </h3>
+                <button onclick="copyText('eth_id')" class="copyToClipboardButton">
+                    <img src="static\images\copy_to_clipboard_icon.png" alt="Copy to Clipboard" width="16" height="16">
+                </button>
             </div>
             <div class="chart-container">
                 <canvas id="eth_priceChart" height="200"></canvas>
             </div>
 
-            <table id="eth_pricesTable" style="margin-top: 20px">
+            <table id="eth_pricesTable" style="margin-top: 20px; margin: 0 auto;">
                 <thead>
                     <tr>
                         <th>Date and Time (HKT)</th>
@@ -83,18 +89,21 @@
                 <img src="static/images/solana-sol-logo.png" alt="Solana Logo" width="50" height="50">
                 <h1>Solana</h1>
             </div>
-            <div style="display: flex;">
+            <div style="display: flex; align-items: center; justify-content: center;">
                 <h3 style="font-family: Trebuchet MS; margin-right: 10px;">Live Index Price (USD):</h3>
                 <h3 id="sol_id" style="border-style: solid; border-radius: 5px; border-color: #FF0000;">
                     {{index_prices['sol']}}
                 </h3>
+                <button onclick="copyText('sol_id')" class="copyToClipboardButton">
+                    <img src="static\images\copy_to_clipboard_icon.png" alt="Copy to Clipboard" width="16" height="16">
+                </button>
             </div>
             <div class="chart-container">
                 <canvas id="sol_priceChart" height="200"></canvas>
             </div>
 
             
-            <table id="sol_pricesTable" style="margin-top: 20px">
+            <table id="sol_pricesTable" style="margin-top: 20px; margin: 0 auto;">
                 <thead>
                     <tr>
                         <th>Date and Time (HKT)</th>
@@ -133,6 +142,13 @@
         }
 
         setInterval(updatePrices, 2000);
+
+
+        function copyText(currency_id) {
+            var copyText = document.getElementById(currency_id).textContent;
+            navigator.clipboard.writeText(copyText);
+            // alert("Copied");
+        }
 
         var compiled_prices = JSON.parse('{{ compiled_prices | safe }}');
         console.log(compiled_prices);

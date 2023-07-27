@@ -43,6 +43,7 @@ body {
 .chart-container {
     width: 100%;
     margin: 0 auto;
+    margin-bottom: 5%;
 }
 
 @media screen and (min-width: 768px) {
@@ -51,6 +52,24 @@ body {
     }
 }
 
+.copyToClipboardButton {
+    padding: 0;
+    margin-left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    position: relative;
+
+}
+
+.copyToClipboardButton img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}​
 
 table {
     border-collapse: collapse;
